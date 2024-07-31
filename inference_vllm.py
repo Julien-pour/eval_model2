@@ -45,8 +45,10 @@ model_id =   args.arg_model_id
 accum_step=args.accum_step
 
 # name: name of the methode (aces,elm-nlp,aces)
+unique_id=args.path_archive.split("/")[-1].split(".")[0]
+
 params={"lr":args.lr,"epochs":args.arg_epoch,"model_id":model_id,"test_base_model":args.test_base_model,
-        "name_archive":args.name_archive,"seed":args.seed,"accum_step":accum_step,
+        "name_archive":unique_id,"seed":args.seed,"accum_step":accum_step,
         "gpu":args.arg_gpu,"n_gpu":args.n_gpu }
 
 # try:
@@ -54,7 +56,6 @@ params={"lr":args.lr,"epochs":args.arg_epoch,"model_id":model_id,"test_base_mode
 # except:
 #     unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_0"
     
-unique_id=args.path_archive.split("/")[-1].split(".")[0]
 
 filename_save = args.base_path+"save_results/multiple_results/"+f"good_results_{unique_id}.json"
 
