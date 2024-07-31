@@ -457,4 +457,3 @@ def reliability_guard(maximum_memory_bytes: Optional[int] = None):
     sys.modules["resource"] = None
     sys.modules["psutil"] = None
     sys.modules["tkinter"] = None
-    
