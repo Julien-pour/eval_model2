@@ -15,7 +15,7 @@ from utils import pass_at_k,judge_parallel,get_formated_chat_dataset
 parser = argparse.ArgumentParser(description="Example script for argument parsing")
 parser.add_argument("--base_path", type=str, help="path to this git project evaluate_model",default="/gpfswork/rech/imi/uqv82bm/eval_model2/")
 parser.add_argument("--path_model_base", type=str, help="path where hf model are saved",default="/gpfsscratch/rech/imi/uqv82bm/hf/")
-parser.add_argument("-m", "--arg_model_id", type=str, help=" model",default="Meta-Llama-3-8B-Instruct")
+parser.add_argument("-m", "--arg_model_id", type=str, help=" model",default="deepseek-coder-1.3b-instruct")
 parser.add_argument("-e", "--arg_epoch", type=int, help="number epoch",default=2)
 parser.add_argument("-b", "--arg_bs", type=int, help=" bs train",default=2)
 parser.add_argument( "--arg_bs_test", type=int, help=" bs train",default=1024)
@@ -40,7 +40,7 @@ n_max_token=2048 #1360*
 args = parser.parse_args()
 eager_mode=args.eager_mode.lower()=="true"
 learning_rate= args.lr
-model_id =   args.arg_model_id
+model_id =  args.arg_model_id
 
 accum_step=args.accum_step
 

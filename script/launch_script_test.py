@@ -85,7 +85,7 @@ for name in list_name:
     for seed in list_seed:
         archive = name+"_seed-"+str(seed)+".json"
         # name_archive=archive.split(".json")[0]
-        script_formated = script_1.format(n_gpu=n_gpu,dev_script=dev_script,h="2")+script_2.format(name_archive=archive,e=e,lr=lr,test_base_model=test_base_model,model_id=model_id,seed=seed,n_gpu_inference=n_gpu)
+        script_formated = script_1.format(n_gpu=n_gpu,dev_script=dev_script,h="2")+script_2.format(name_archive=archive,e=e,lr=lr,test_base_model=test_base_model,model_id=model_id,model_id_2=model_id,seed=seed,n_gpu_inference=n_gpu)
         extra_path='lr-mode'+str(lr)+'-e-'+str(e)
         slurmfile_path = f'slurm/run_v100'+extra_path+'.slurm'
         with open(slurmfile_path, 'w') as f:
@@ -96,7 +96,7 @@ for name in list_name:
 name="wizard_gen"
 seed=1
 archive = name+"_seed-"+str(seed)+".json"
-script_formated = script_1.format(n_gpu=n_gpu,dev_script=dev_script,h="2")+script_2.format(name_archive=archive,e=e,lr=lr,test_base_model=test_base_model,model_id=model_id,seed=seed,n_gpu_inference=n_gpu)
+script_formated = script_1.format(n_gpu=n_gpu,dev_script=dev_script,h="2")+script_2.format(name_archive=archive,e=e,lr=lr,test_base_model=test_base_model,model_id=model_id,model_id_2=model_id,seed=seed,n_gpu_inference=n_gpu)
 extra_path='lr-mode'+str(lr)+'-e-'+str(e)
 slurmfile_path = f'slurm/run_v100'+extra_path+'.slurm'
 with open(slurmfile_path, 'w') as f:
