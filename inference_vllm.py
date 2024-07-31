@@ -61,13 +61,10 @@ filename_save = args.base_path+"save_results/multiple_results/"+f"good_results_{
 
 params["unique_id"]=unique_id
 
-run_name = model_id+unique_id
+run_name = model_id+"_"+unique_id
 
     
-if args.arg_gpu=="v100":
-    name_json_save_all = args.base_path+f"save_results/passk_{args.n_gpu}-v100_llama.json"#.split("/")[1]
-else:
-    name_json_save_all = args.base_path+f"save_results/passk_good_llama.json"#.split("/")[1]
+name_json_save_all = args.base_path+f"save_results/passk_rebuttal.json"#.split("/")[1]
 
 name_json_save_all_solution = args.base_path+f"save_results/save_sol/good_{model_id}.json"#.split("/")[1]
 
@@ -296,7 +293,7 @@ print(final_results)
 n_try=0
 while n_try<30:
     n_try+=1
-    sleeptime = random.uniform(1, 30)
+    sleeptime = random.uniform(1, 10)
     print("sleeping for:", sleeptime, "seconds")
     sleep(sleeptime)
 

@@ -100,7 +100,7 @@ model = AutoModelForCausalLM.from_pretrained(
 warmup_ratio=0.1
 response_template= "Solution 2:"
 collator = DataCollatorForCompletionOnlyLM(response_template, tokenizer=tokenizer,mlm=False)
-run_name = model_id+unique_id#.split("/")[1]
+run_name = model_id+"_"+unique_id#.split("/")[1]
 
 
 dat=dataset_formated.map(lambda x: {"formatted_chat": tokenizer.apply_chat_template(x["chat"], tokenize=False, add_generation_prompt=False)},remove_columns=dataset_formated.column_names)
