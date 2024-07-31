@@ -39,7 +39,7 @@ ratios=(1.0) # data
 
 """
 script_2="""
-python finetune.py --base_path $WORK/eval_model2/ --path_archive "archives/{name_archive}" -e {e} -b 2 --arg_gpu "a100" -a 4 --lr={lr} --test_base_model {test_base_model}
+python finetune.py --base_path $WORK/eval_model2/ --path_archive "archives/{name_archive}" -e {e} -b 2 --arg_gpu "v100" -a 4 --lr={lr} --test_base_model {test_base_model}
 conda deactivate
 module purge 
 module load python/3.11.5
@@ -47,7 +47,7 @@ MAXWAIT=40
 sleep $((RANDOM % MAXWAIT))
 
 conda activate vllm532
-python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 2 --arg_gpu "a100" -a 4 --lr={lr} --test_base_model {test_base_model} --arg_bs_test 1024 --arg_model_id {model_id} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference}
+python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 2 --arg_gpu "v100" -a 4 --lr={lr} --test_base_model {test_base_model} --arg_bs_test 1024 --arg_model_id {model_id} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference}
 """
 
 if not os.path.exists('slurm/slurm_files'):
