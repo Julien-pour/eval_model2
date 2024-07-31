@@ -32,6 +32,7 @@ parser.add_argument("--eager_mode", type=str, help="eager_mode",default="False")
 parser.add_argument("--swap_space", type=float, help="swap space",default=1)
 parser.add_argument("--seed", type=int, help="seed: -1 -> merged, ...",default=-1) 
 parser.add_argument("--path_archive", type=str, help="name_archive, ... archives/") 
+parser.add_argument("--temperature", type=float, help="temperature",default=0.8) 
 
 
 n_max_token=2048 #1360*
@@ -41,7 +42,6 @@ eager_mode=args.eager_mode.lower()=="true"
 learning_rate= args.lr
 model_id =   args.arg_model_id
 
-
 accum_step=args.accum_step
 
 # name: name of the methode (aces,elm-nlp,aces)
@@ -49,7 +49,7 @@ unique_id=args.path_archive.split("/")[-1].split(".")[0]
 
 params={"lr":args.lr,"epochs":args.arg_epoch,"model_id":model_id,"test_base_model":args.test_base_model,
         "name_archive":unique_id,"seed":args.seed,"accum_step":accum_step,
-        "gpu":args.arg_gpu,"n_gpu":args.n_gpu }
+        "gpu":args.arg_gpu,"n_gpu":args.n_gpu, "temperature":args.temperature }
 
 # try:
 #     unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_{os.getenv('SLURM_ARRAY_TASK_ID')}"
@@ -110,7 +110,7 @@ tokenizer=AutoTokenizer.from_pretrained(output_dir)
 print("load model at", output_dir)
 llm = LLM(output_dir,max_model_len=2560,enforce_eager=eager_mode,tensor_parallel_size=args.n_gpu,dtype=dtype,swap_space=args.swap_space)
 sampling_params = SamplingParams(
-            temperature=0.8,
+            temperature=args.temperature,
             top_p=1,
             max_tokens=1024,
             # presence_penalty=1.15,
