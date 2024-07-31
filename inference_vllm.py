@@ -21,7 +21,7 @@ parser.add_argument("-b", "--arg_bs", type=int, help=" bs train",default=2)
 parser.add_argument( "--arg_bs_test", type=int, help=" bs train",default=1024)
 
 parser.add_argument("-s", "--arg_seed_random", type=int, help="seed for the random generator",default=1)
-parser.add_argument("-g", "--arg_gpu", type=str, help="GPU use",default="v100")
+parser.add_argument("-g", "--arg_gpu", type=str, help="GPU use",default="a100")
 parser.add_argument("-a", "--accum_step", type=int, help="number of accumulation step",default=1)
 parser.add_argument("--test_base_model", type=str, help="just test base model",default="False")
 parser.add_argument("--lr", type=float, help="learning rate")
@@ -30,6 +30,8 @@ parser.add_argument("-k", "--arg_k", type=int, help="k in pass@k",default=100)
 parser.add_argument("--n_gpu", type=int, help="how many gpu to use",default=2)
 parser.add_argument("--eager_mode", type=str, help="eager_mode",default="False")
 parser.add_argument("--swap_space", type=float, help="swap space",default=1)
+parser.add_argument("--seed", type=int, help="seed: -1 -> merged, ...",default=-1) 
+parser.add_argument("--name_archive", type=str, help="name_archive, ...") 
 
 
 n_max_token=2048 #1360*
@@ -43,7 +45,9 @@ model_id =   args.arg_model_id
 accum_step=args.accum_step
 
 # name: name of the methode (aces,elm-nlp,aces)
-params={"lr":args.lr,"epochs":args.arg_epoch,"model_id":model_id,"test_base_model":args.test_base_model,"gpu":args.arg_gpu,"n_gpu":args.n_gpu }
+params={"lr":args.lr,"epochs":args.arg_epoch,"model_id":model_id,"test_base_model":args.test_base_model,
+        "name_archive":args.name_archive,"seed":args.seed,"accum_step":accum_step,
+        "gpu":args.arg_gpu,"n_gpu":args.n_gpu }
 
 try:
     unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_{os.getenv('SLURM_ARRAY_TASK_ID')}"
@@ -98,12 +102,12 @@ else:
 from transformers import AutoTokenizer
 tokenizer=AutoTokenizer.from_pretrained(output_dir)
 
-
-llm = LLM(output_dir,max_model_len=2048,enforce_eager=eager_mode,tensor_parallel_size=args.n_gpu,dtype=dtype,swap_space=args.swap_space)
+print("load model at", output_dir)
+llm = LLM(output_dir,max_model_len=2560,enforce_eager=eager_mode,tensor_parallel_size=args.n_gpu,dtype=dtype,swap_space=args.swap_space)
 sampling_params = SamplingParams(
             temperature=0.8,
             top_p=1,
-            max_tokens=512,
+            max_tokens=1024,
             # presence_penalty=1.15,
             stop_token_ids=[tokenizer.eos_token_id, tokenizer.convert_tokens_to_ids("<|eot_id|>")]
             
@@ -312,37 +316,37 @@ while n_try<30:
 total_speed_token=total_speed_token/n_count_speed_tok
 total_t_time=total_t_time/n_count_speed_tok
 
-final_results_speed = {
-    'parameters': params,
-    'results': {"total_t_time":total_t_time,"total_speed_token":total_speed_token}
-}
-n_try=0
-while n_try<30:
-    n_try+=1
-    sleeptime = random.uniform(1, 30)
-    print("sleeping for:", sleeptime, "seconds")
-    sleep(sleeptime)
+# final_results_speed = {
+#     'parameters': params,
+#     'results': {"total_t_time":total_t_time,"total_speed_token":total_speed_token}
+# }
+# n_try=0
+# while n_try<30:
+#     n_try+=1
+#     sleeptime = random.uniform(1, 30)
+#     print("sleeping for:", sleeptime, "seconds")
+#     sleep(sleeptime)
 
-    try:
-        with open(name_json_save_speed, "r+") as outfile:
-            portalocker.lock(outfile, portalocker.LOCK_EX)  # Lock the file for exclusive writing
-            json_content=json.load(outfile)
-            if model_id not in json_content:
-                json_content[model_id]=[]
-            json_content[model_id].append(final_results_speed) 
-            outfile.seek(0)
-            json.dump(json_content, outfile,indent=4)
-            outfile.truncate()  # Truncate file size in case new data is smaller
-            portalocker.unlock(outfile)
-            n_try=30
-            break
+#     try:
+#         with open(name_json_save_speed, "r+") as outfile:
+#             portalocker.lock(outfile, portalocker.LOCK_EX)  # Lock the file for exclusive writing
+#             json_content=json.load(outfile)
+#             if model_id not in json_content:
+#                 json_content[model_id]=[]
+#             json_content[model_id].append(final_results_speed) 
+#             outfile.seek(0)
+#             json.dump(json_content, outfile,indent=4)
+#             outfile.truncate()  # Truncate file size in case new data is smaller
+#             portalocker.unlock(outfile)
+#             n_try=30
+#             break
 
 
-    except:
-        pass
+#     except:
+#         pass
 
-with open(name_json_save_all_solution,"w") as outfile:
-    json.dump(list_puzzle_gen,outfile,indent=4)
+# with open(name_json_save_all_solution,"w") as outfile:
+#     json.dump(list_puzzle_gen,outfile,indent=4)
 
 
 
