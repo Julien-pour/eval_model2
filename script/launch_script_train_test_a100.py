@@ -82,8 +82,8 @@ for e in [1]:
 
 list_archive=[]
 list_seed = [5, 6, 7]
-for name in list_name:
-    for seed in list_seed:
+for id_name,name in enumerate(list_name):
+    for id_seed,seed in enumerate(list_seed):
         archive = name+"_seed-"+str(seed)+".json"
         # name_archive=archive.split(".json")[0]
         script_formated = script_1.format(n_gpu=n_gpu,dev_script=dev_script,h="2")+script_2.format(name_archive=archive,e=e,lr=lr,test_base_model=test_base_model,model_id=model_id,seed=seed,n_gpu_inference=n_gpu)
@@ -93,8 +93,10 @@ for name in list_name:
             f.write(script_formated)
             # print(script_formated)
         subprocess.call(f'sbatch {slurmfile_path}', shell=True)
-    time.sleep(60*8) # Sleep for 8 minutes
-
+    if id_name==0:
+        time.sleep(60*10) # Sleep for 8 minutes
+    if id_name==2:
+        time.sleep(60*10)
 
 name="wizard_gen"
 seed=1
