@@ -63,8 +63,10 @@ params["unique_id"]=unique_id
 
 run_name = model_id+"_"+unique_id
 
-    
-name_json_save_all = args.base_path+f"save_results/passk_rebuttal.json"#.split("/")[1]
+if args.arg_gpu=="a100":
+    name_json_save_all = args.base_path+f"save_results/passk_rebuttal_a100.json"#.split("/")[1]
+else:
+    name_json_save_all = args.base_path+f"save_results/passk_rebuttal.json"#.split("/")[1]
 
 name_json_save_all_solution = args.base_path+f"save_results/save_sol/good_{model_id}.json"#.split("/")[1]
 

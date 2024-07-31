@@ -43,7 +43,7 @@ python finetune.py --base_path $WORK/eval_model2/ --path_archive "archives/{name
 conda deactivate
 module purge 
 module load python/3.11.5
-MAXWAIT=40
+MAXWAIT=30
 sleep $((RANDOM % MAXWAIT))
 
 conda activate vllm532
