@@ -32,6 +32,8 @@ parser.add_argument("--eager_mode", type=str, help="eager_mode",default="False")
 parser.add_argument("--swap_space", type=float, help="swap space",default=1)
 parser.add_argument("--seed", type=int, help="seed: -1 -> merged, ...",default=-1) 
 parser.add_argument("--path_archive", type=str, help="name_archive, ... archives/") 
+parser.add_argument("--path_archive_test", type=str, help="name_archive, ... archives/",default="archives/P3_test_emb_wizard3B.json") 
+
 parser.add_argument("--temperature", type=float, help="temperature",default=0.8) 
 
 
@@ -119,7 +121,7 @@ sampling_params = SamplingParams(
 
 
 # testset= preprocessing_P3_no_test(split="test",n_token_max=1024,path=args.base_path,tokenizer=tokenizer)
-path_test=args.base_path+"archives/"+"P3_test_emb_wizard3B.json"
+path_test=args.base_path+args.path_archive_test
 with open(path_test,mode = "r") as f:
     testset = json.load(f)
 
