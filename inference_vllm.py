@@ -26,7 +26,7 @@ parser.add_argument("-a", "--accum_step", type=int, help="number of accumulation
 parser.add_argument("--test_base_model", type=str, help="just test base model",default="False")
 parser.add_argument("--lr", type=float, help="learning rate")
 parser.add_argument("--name_run", type=str, help="run_name")
-parser.add_argument("-k", "--arg_k", type=int, help="k in pass@k",default=100)
+parser.add_argument("-k", "--arg_k", type=int, help="k in pass@k",default=1)
 parser.add_argument("--n_gpu", type=int, help="how many gpu to use",default=2)
 parser.add_argument("--eager_mode", type=str, help="eager_mode",default="False")
 parser.add_argument("--swap_space", type=float, help="swap space",default=1)
