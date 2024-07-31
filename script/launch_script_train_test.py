@@ -53,7 +53,7 @@ python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 4 --arg_gpu "v
 if not os.path.exists('slurm/slurm_files'):
     os.makedirs('slurm/slurm_files')
 
-model_id = "Meta-Llama-3-8B-Instruct"#"Meta-Llama-3-8B-Instruct"
+model_id = "deepseek-coder-1.3b-instruct"#"Meta-Llama-3-8B-Instruct"
 # testset_archive="preprocess_p3_emb_dedup_puzzles.json"
 e=1
 n_gpu=4

@@ -16,7 +16,8 @@ import random
 from time import sleep
 from utils import get_formated_chat_dataset
 import numpy as np
-
+# set numpy seed
+np.random.seed(42)
 parser = argparse.ArgumentParser(description="Example script for argument parsing")
 # parser.add_argument("--base_path", type=str, help="path to this git project evaluate_model",default="/home/flowers/work/eval_model2/")#)#)
 # parser.add_argument("--path_model_base", type=str, help="path where hf model are saved",default="/home/flowers/work/hf/")#)#
@@ -80,6 +81,7 @@ with open(path_train, encoding="utf-8") as f:
     dataset = json.load(f)
 # remove element when "idx_generation" >39
 dataset = [d for d in dataset if d["idx_generation"]<=39]
+dataset=np.random.choice(dataset, 3818, replace=False)
 
 dataset_formated = get_formated_chat_dataset(dataset,text_field="program_str",retun_response=True) # key == chat_data
 hf_dir=args.path_model_base
