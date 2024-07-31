@@ -39,7 +39,7 @@ ratios=(1.0) # data
 
 """
 script_2="""
-python finetune.py --base_path $WORK/eval_model2/ --path_archive "archives/{name_archive}" -e {e} -b 2 --arg_gpu "v100" -a 4 --lr={lr} --test_base_model {test_base_model}
+python finetune.py --base_path $WORK/eval_model2/ --path_archive "archives/{name_archive}" -e {e} -b 4 --arg_gpu "v100" -a 2 --lr={lr} --test_base_model {test_base_model} --arg_model_id {model_id}
 conda deactivate
 module purge 
 module load python/3.11.5
@@ -47,16 +47,17 @@ MAXWAIT=40
 sleep $((RANDOM % MAXWAIT))
 
 conda activate vllm532
-python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 2 --arg_gpu "v100" -a 4 --lr={lr} --test_base_model {test_base_model} --arg_bs_test 1024 --arg_model_id {model_id} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference}
+python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 4 --arg_gpu "v100" -a 2 --lr={lr} --test_base_model {test_base_model} --arg_bs_test 1024 --arg_model_id {model_id} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference}
 """
 
 if not os.path.exists('slurm/slurm_files'):
     os.makedirs('slurm/slurm_files')
 
-model_id = "Meta-Llama-3-8B-Instruct"
+model_id = "deepseek-coder-1.3b-instruct"#"Meta-Llama-3-8B-Instruct"
 # testset_archive="preprocess_p3_emb_dedup_puzzles.json"
 e=1
 n_gpu=4
+n_gpu_train=2
 test_base_model="False"
 dev_script=""#"#SBATCH --qos=qos_gpu-dev"
 list_archive=[]
