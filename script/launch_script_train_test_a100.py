@@ -2,7 +2,7 @@ import os
 import argparse
 import subprocess
 from datetime import datetime
-import time
+
 seed=1
 # script running over epochs, LRs, ratios data
 
@@ -13,7 +13,7 @@ script_1="""#!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --gres=gpu:{n_gpu}
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=40
 {dev_script}
 
 #SBATCH --hint=nomultithread
@@ -39,11 +39,11 @@ ratios=(1.0) # data
 
 """
 script_2="""
-python finetune.py --base_path $WORK/eval_model2/ --path_archive "archives/{name_archive}" -e {e} -b 4 --arg_gpu "a100" -a 2 --lr={lr} --test_base_model {test_base_model}
+python finetune.py --base_path $WORK/eval_model2/ --path_archive "archives/{name_archive}" -e {e} -b 4 --arg_gpu "a100" -a 2 --lr={lr} --test_base_model {test_base_model} --arg_model_id {model_id}
 conda deactivate
 module purge 
 module load python/3.11.5
-MAXWAIT=30
+MAXWAIT=40
 sleep $((RANDOM % MAXWAIT))
 
 conda activate vllm532
@@ -56,7 +56,8 @@ if not os.path.exists('slurm/slurm_files'):
 model_id = "deepseek-coder-1.3b-instruct"#"Meta-Llama-3-8B-Instruct"
 # testset_archive="preprocess_p3_emb_dedup_puzzles.json"
 e=1
-n_gpu=1
+n_gpu=4
+n_gpu_train=2
 test_base_model="False"
 dev_script=""#"#SBATCH --qos=qos_gpu-dev"
 list_archive=[]
@@ -72,38 +73,32 @@ for e in [1]:
             # name_archive=archive.split(".json")[0]
             script_formated = script_1.format(n_gpu=n_gpu,dev_script=dev_script,h="2")+script_2.format(name_archive=archive,e=e,lr=lr,test_base_model=test_base_model,model_id=model_id,seed=seed,n_gpu_inference=n_gpu)
             extra_path='lr-mode'+str(lr)+'-e-'+str(e)
-            slurmfile_path = f'slurm/run_v100'+extra_path+'.slurm'
+            slurmfile_path = f'slurm/run_a100'+extra_path+'.slurm'
             with open(slurmfile_path, 'w') as f:
                 f.write(script_formated)
                 # print(script_formated)
             subprocess.call(f'sbatch {slurmfile_path}', shell=True)
 
-# 5 archives
-
 list_archive=[]
 list_seed = [5, 6, 7]
-for id_name,name in enumerate(list_name):
-    for id_seed,seed in enumerate(list_seed):
+for name in list_name:
+    for seed in list_seed:
         archive = name+"_seed-"+str(seed)+".json"
         # name_archive=archive.split(".json")[0]
         script_formated = script_1.format(n_gpu=n_gpu,dev_script=dev_script,h="2")+script_2.format(name_archive=archive,e=e,lr=lr,test_base_model=test_base_model,model_id=model_id,seed=seed,n_gpu_inference=n_gpu)
         extra_path='lr-mode'+str(lr)+'-e-'+str(e)
-        slurmfile_path = f'slurm/run_v100'+extra_path+'.slurm'
+        slurmfile_path = f'slurm/run_a100'+extra_path+'.slurm'
         with open(slurmfile_path, 'w') as f:
             f.write(script_formated)
             # print(script_formated)
         subprocess.call(f'sbatch {slurmfile_path}', shell=True)
-    if id_name==0:
-        time.sleep(60*10) # Sleep for 8 minutes
-    if id_name==2:
-        time.sleep(60*10)
 
 name="wizard_gen"
 seed=1
 archive = name+"_seed-"+str(seed)+".json"
 script_formated = script_1.format(n_gpu=n_gpu,dev_script=dev_script,h="2")+script_2.format(name_archive=archive,e=e,lr=lr,test_base_model=test_base_model,model_id=model_id,seed=seed,n_gpu_inference=n_gpu)
 extra_path='lr-mode'+str(lr)+'-e-'+str(e)
-slurmfile_path = f'slurm/run_v100'+extra_path+'.slurm'
+slurmfile_path = f'slurm/run_a100'+extra_path+'.slurm'
 with open(slurmfile_path, 'w') as f:
     f.write(script_formated)
     # print(script_formated)
