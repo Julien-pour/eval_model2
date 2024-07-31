@@ -64,10 +64,10 @@ else:
 # save run config
 model_id = args.arg_model_id
 params={"name":args.name_run, "lr":args.lr,"epochs":args.arg_epoch,"model_id":model_id} 
-try:
-    unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_{os.getenv('SLURM_ARRAY_TASK_ID')}"
-except:
-    unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_0"
+# try:
+#     unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_{os.getenv('SLURM_ARRAY_TASK_ID')}"
+# except:
+#     unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_0"
 unique_id=args.path_archive.split("/")[-1].split(".")[0]
 filename_save = args.base_path+"save_results/multiple_results/"+f"results_{unique_id}.json"
 params["unique_id"]=unique_id

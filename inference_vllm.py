@@ -31,7 +31,7 @@ parser.add_argument("--n_gpu", type=int, help="how many gpu to use",default=2)
 parser.add_argument("--eager_mode", type=str, help="eager_mode",default="False")
 parser.add_argument("--swap_space", type=float, help="swap space",default=1)
 parser.add_argument("--seed", type=int, help="seed: -1 -> merged, ...",default=-1) 
-parser.add_argument("--name_archive", type=str, help="name_archive, ...") 
+parser.add_argument("--path_archive", type=str, help="name_archive, ... archives/") 
 
 
 n_max_token=2048 #1360*
@@ -49,11 +49,15 @@ params={"lr":args.lr,"epochs":args.arg_epoch,"model_id":model_id,"test_base_mode
         "name_archive":args.name_archive,"seed":args.seed,"accum_step":accum_step,
         "gpu":args.arg_gpu,"n_gpu":args.n_gpu }
 
-try:
-    unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_{os.getenv('SLURM_ARRAY_TASK_ID')}"
-except:
-    unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_0"
+# try:
+#     unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_{os.getenv('SLURM_ARRAY_TASK_ID')}"
+# except:
+#     unique_id=f"{os.getenv('SLURM_ARRAY_JOB_ID')}_0"
+    
+unique_id=args.path_archive.split("/")[-1].split(".")[0]
+
 filename_save = args.base_path+"save_results/multiple_results/"+f"good_results_{unique_id}.json"
+
 params["unique_id"]=unique_id
 
 run_name = model_id+unique_id
