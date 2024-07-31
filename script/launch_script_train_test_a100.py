@@ -2,18 +2,18 @@ import os
 import argparse
 import subprocess
 from datetime import datetime
-
+import time
 seed=1
 # script running over epochs, LRs, ratios data
 
 script_1="""#!/bin/bash
-#SBATCH --account=imi@v100
-#SBATCH -C v100-32g
+#SBATCH --account=imi@a100
+#SBATCH -C a100
 #SBATCH --job-name=codellm
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --gres=gpu:{n_gpu}
-#SBATCH --cpus-per-task=40
+#SBATCH --cpus-per-task=8
 {dev_script}
 
 #SBATCH --hint=nomultithread
@@ -56,9 +56,9 @@ if not os.path.exists('slurm/slurm_files'):
 model_id = "Meta-Llama-3-8B-Instruct"
 # testset_archive="preprocess_p3_emb_dedup_puzzles.json"
 e=1
-n_gpu=4
+n_gpu=1
 test_base_model="False"
-dev_script=""#"#SBATCH --qos=qos_gpu-dev"
+dev_script="#SBATCH --qos=qos_gpu-dev"
 list_archive=[]
 
 list_name = ["rd_gen","elm","elm_nlp","aces","aces_elm"]
@@ -78,6 +78,8 @@ for e in [1]:
                 # print(script_formated)
             subprocess.call(f'sbatch {slurmfile_path}', shell=True)
 
+# 5 archives
+
 list_archive=[]
 list_seed = [5, 6, 7]
 for name in list_name:
@@ -91,6 +93,8 @@ for name in list_name:
             f.write(script_formated)
             # print(script_formated)
         subprocess.call(f'sbatch {slurmfile_path}', shell=True)
+    time.sleep(60*8) # Sleep for 8 minutes
+
 
 name="wizard_gen"
 seed=1
