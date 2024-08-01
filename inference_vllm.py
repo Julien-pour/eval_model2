@@ -35,6 +35,8 @@ parser.add_argument("--path_archive", type=str, help="name_archive, ... archives
 parser.add_argument("--path_archive_test", type=str, help="name_archive, ... archives/",default="archives/P3_test_emb_wizard3B.json") 
 
 parser.add_argument("--temperature", type=float, help="temperature",default=0.8) 
+parser.add_argument("--file_save_name", type=str, help="file_save_name",default="passk_rebuttal") 
+
 
 
 n_max_token=2048 #1360*
@@ -66,9 +68,9 @@ params["unique_id"]=unique_id
 run_name = model_id+"_"+unique_id
 
 if args.arg_gpu=="a100":
-    name_json_save_all = args.base_path+f"save_results/passk_rebuttal_a100.json"#.split("/")[1]
+    name_json_save_all = args.base_path+f"save_results/{args.file_save_name}_a100.json"#.split("/")[1]
 else:
-    name_json_save_all = args.base_path+f"save_results/passk_rebuttal.json"#.split("/")[1]
+    name_json_save_all = args.base_path+f"save_results/{args.file_save_name}.json"#.split("/")[1]
 
 name_json_save_all_solution = args.base_path+f"save_results/save_sol/good_{model_id}.json"#.split("/")[1]
 
