@@ -26,7 +26,7 @@ parser.add_argument("-a", "--accum_step", type=int, help="number of accumulation
 parser.add_argument("--test_base_model", type=str, help="just test base model",default="False")
 parser.add_argument("--lr", type=float, help="learning rate")
 parser.add_argument("--name_run", type=str, help="run_name")
-parser.add_argument("-k", "--arg_k", type=int, help="k in pass@k",default=10)
+parser.add_argument("-k", "--arg_k", type=int, help="k in pass@k",default=1)
 parser.add_argument("--n_gpu", type=int, help="how many gpu to use",default=2)
 parser.add_argument("--eager_mode", type=str, help="eager_mode",default="False")
 parser.add_argument("--swap_space", type=float, help="swap space",default=1)
@@ -34,7 +34,7 @@ parser.add_argument("--seed", type=int, help="seed: -1 -> merged, ...",default=-
 parser.add_argument("--path_archive", type=str, help="name_archive, ... archives/") 
 parser.add_argument("--path_archive_test", type=str, help="name_archive, ... archives/",default="archives/P3_test_emb_wizard3B.json") 
 
-parser.add_argument("--temperature", type=float, help="temperature",default=0.8) 
+parser.add_argument("--temperature", type=float, help="temperature",default=0.0) 
 parser.add_argument("--file_save_name", type=str, help="file_save_name",default="passk_rebuttal") 
 
 
