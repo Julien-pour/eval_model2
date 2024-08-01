@@ -47,7 +47,7 @@ MAXWAIT=40
 sleep $((RANDOM % MAXWAIT))
 
 conda activate vllm532
-python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 4 --arg_gpu "v100" -a 2 --lr={lr} --test_base_model {test_base_model} --arg_bs_test 1024 --arg_model_id {model_id_2} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference} --path_archive_test "archives/{test_archive}" --file_save_name "cross_archive_test"
+python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 4 --arg_gpu "v100" -a 2 --lr={lr} --test_base_model {test_base_model} --arg_bs_test 1024 --arg_model_id {model_id_2} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference} --path_archive_test "archives/{test_archive}" --file_save_name "cross_archive_test_2"
 """
 
 if not os.path.exists('slurm/slurm_files'):
@@ -67,7 +67,7 @@ for id_model,model_id in enumerate(["deepseek-coder-1.3b-instruct","Meta-Llama-3
         sleep $((RANDOM % MAXWAIT))
 
         conda activate vllm532
-        python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 4 --arg_gpu "v100" -a 2 --lr={lr} --test_base_model {test_base_model} --arg_bs_test 1024 --arg_model_id {model_id_2} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference} --path_archive_test "archives/{test_archive}" --file_save_name "cross_archive_test"
+        python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 4 --arg_gpu "v100" -a 2 --lr={lr} --test_base_model {test_base_model} --arg_bs_test 1024 --arg_model_id {model_id_2} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference} --path_archive_test "archives/{test_archive}" --file_save_name "cross_archive_test_2"
         """
         else:
             script_2="""
@@ -79,7 +79,7 @@ for id_model,model_id in enumerate(["deepseek-coder-1.3b-instruct","Meta-Llama-3
         sleep $((RANDOM % MAXWAIT))
 
         conda activate vllm532
-        python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 1 --arg_gpu "v100" -a 8 --lr={lr} --test_base_model {test_base_model} --arg_bs_test 1024 --arg_model_id {model_id_2} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference} --path_archive_test "archives/{test_archive}" --file_save_name "cross_archive_test"
+        python inference_vllm.py --base_path $WORK/eval_model2/ -e {e} -b 1 --arg_gpu "v100" -a 8 --lr={lr} --test_base_model {test_base_model} --arg_bs_test 1024 --arg_model_id {model_id_2} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference} --path_archive_test "archives/{test_archive}" --file_save_name "cross_archive_test_2"
         """
 
         e=1

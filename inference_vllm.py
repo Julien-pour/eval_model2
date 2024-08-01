@@ -50,9 +50,10 @@ accum_step=args.accum_step
 
 # name: name of the methode (aces,elm-nlp,aces)
 unique_id=args.path_archive.split("/")[-1].split(".")[0]
+name_archive_test=args.path_archive_test.split("/")[-1].split(".")[0]
 
 params={"lr":args.lr,"epochs":args.arg_epoch,"model_id":model_id,"test_base_model":args.test_base_model,
-        "name_archive":unique_id,"seed":args.seed,"accum_step":accum_step,
+        "name_archive":unique_id,"name_archive_test":name_archive_test,"seed":args.seed,"accum_step":accum_step,
         "gpu":args.arg_gpu,"n_gpu":args.n_gpu, "temperature":args.temperature }
 
 # try:
