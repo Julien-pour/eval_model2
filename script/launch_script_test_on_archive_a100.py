@@ -18,10 +18,9 @@ script_1="""#!/bin/bash
 
 #SBATCH --hint=nomultithread
 #SBATCH --time={h}:00:00
-#SBATCH --array=0
 
-#SBATCH --output=./out/big_out_finetune_deep-%A_%a.out
-#SBATCH --error=./out/big_out_finetune_deep-%A_%a.out
+#SBATCH --output=./out/big_out_finetune_deep-%A.out
+#SBATCH --error=./out/big_out_finetune_deep-%A.out
 module purge
 module purge
 
