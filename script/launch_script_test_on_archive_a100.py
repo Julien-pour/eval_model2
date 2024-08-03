@@ -64,7 +64,7 @@ list_model_4V100 = ["Mistral-Large-Instruct-2407-AWQ",
 "deepseek-coder-33b-instruct",
 "Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit"]
 
-list_model_A100 = ["Mistral-Large-Instruct-2407-AWQ","Meta-Llama-3.1-405B-Instruct-AWQ-INT4","Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit","Qwen2-72B-Instruct-AWQ"]
+list_model_A100 = ["Mistral-Large-Instruct-2407-AWQ","Meta-Llama-3.1-405B-Instruct-AWQ-INT4","Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit","Qwen2-72B-Instruct-AWQ","CodeQwen1.5-7B-Chat","starcoder2-15b-instruct-v0.1"]
 list_all_model = list_model_A100
 
 list_archive2test = ["aces_elm_seed-5.json","aces_elm_seed-6.json","aces_elm_seed-7.json","Llama-405B_aces_elm_seed-1.json","Mistral-Large-2407_aces_elm_seed-1.json"]

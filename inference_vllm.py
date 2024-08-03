@@ -105,10 +105,10 @@ if args.arg_gpu=="v100" or "gptq" in model_id.lower():
     dtype="half"
 else:
     dtype="auto"
-# if "Mixtral" in model_id:
-#     enforce_eager=True
-# else:
-#     enforce_eager=False
+if "Mixtral" in model_id or "Qwen" in model_id or "starcoder" in model_id:
+    eager_mode=True
+else:
+    eager_mode=False
 from transformers import AutoTokenizer
 tokenizer=AutoTokenizer.from_pretrained(output_dir)
 
