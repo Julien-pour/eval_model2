@@ -112,7 +112,7 @@ from transformers import AutoTokenizer
 tokenizer=AutoTokenizer.from_pretrained(output_dir)
 
 print("load model at", output_dir)
-llm = LLM(output_dir,max_model_len=2560,enforce_eager=eager_mode,tensor_parallel_size=args.n_gpu,dtype=dtype,swap_space=args.swap_space)
+llm = LLM(output_dir,max_model_len=4000,enforce_eager=eager_mode,tensor_parallel_size=args.n_gpu,dtype=dtype,swap_space=args.swap_space)
 sampling_params = SamplingParams(
             temperature=args.temperature,
             top_p=1,
