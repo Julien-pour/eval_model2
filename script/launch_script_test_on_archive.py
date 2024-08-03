@@ -37,7 +37,7 @@ if not os.path.exists('slurm/slurm_files'):
     os.makedirs('slurm/slurm_files')
 
 
-    script_2="""
+script_2="""
 conda deactivate
 module purge 
 module load python/3.11.5
