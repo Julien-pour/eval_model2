@@ -64,7 +64,7 @@ list_model_4V100 = ["Mistral-Large-Instruct-2407-AWQ",
 "deepseek-coder-33b-instruct",
 "Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit"]
 
-list_model_A100 = ["Mistral-Large-Instruct-2407-AWQ"]#"Meta-Llama-3.1-405B-Instruct-AWQ-INT4"]
+list_model_A100 = ["Mistral-Large-Instruct-2407-AWQ","Meta-Llama-3.1-405B-Instruct-AWQ-INT4","Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit","Qwen2-72B-Instruct-AWQ"]
 list_all_model = list_model_A100
 
 list_archive2test = ["aces_elm_seed-5.json","aces_elm_seed-6.json","aces_elm_seed-7.json","Llama-405B_aces_elm_seed-1.json","Mistral-Large-2407_aces_elm_seed-1.json"]
@@ -91,3 +91,6 @@ for id_model,model_id in enumerate(list_all_model):
             f.write(script_formated)
             # print(script_formated)
         subprocess.call(f'sbatch {slurmfile_path}', shell=True)
+
+
+# squeue -u $USER -o "%.18i %.9P %.8j %.8u %.2t %.10M %.6D %R %L"
