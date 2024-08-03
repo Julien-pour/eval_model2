@@ -36,6 +36,7 @@ parser.add_argument("--path_archive_test", type=str, help="name_archive, ... arc
 
 parser.add_argument("--temperature", type=float, help="temperature",default=0.0) 
 parser.add_argument("--file_save_name", type=str, help="file_save_name",default="passk_rebuttal") 
+parser.add_argument("--cutoff_gen", type=int, help="gen to keep -1 for all gen",default=-1) 
 
 
 
@@ -128,8 +129,11 @@ path_test=args.base_path+args.path_archive_test
 with open(path_test,mode = "r") as f:
     testset = json.load(f)
 
-
-testset_f=[p["program_str"].split("def g")[0].strip() for p in testset]
+# testset = [x for x in testset if (x["idx_generation"]<=39 and x["idx_generation"]>=0)]
+if args.cutoff_gen!=-1:
+    testset = [p["program_str"].split("def g")[0].strip() for p in testset if p["idx_generation"]<=args.cutoff_gen ]
+else:
+    testset_f=[p["program_str"].split("def g")[0].strip() for p in testset]
 curr_idx=0
 correct_puzz=0
 

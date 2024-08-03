@@ -45,7 +45,7 @@ MAXWAIT=40
 sleep $((RANDOM % MAXWAIT))
 
 conda activate vllm532
-python inference_vllm.py --base_path $WORK/eval_model2/ --arg_gpu "a100" --test_base_model {test_base_model} --arg_bs_test 8000 --arg_model_id {model_id_2} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference} --path_archive_test "archives/{test_archive}" --file_save_name "difficulty_rebuttal"
+python inference_vllm.py --base_path $WORK/eval_model2/ --arg_gpu "a100" --test_base_model {test_base_model} --arg_bs_test 8000 --arg_model_id {model_id_2} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference} --path_archive_test "archives/{test_archive}" --file_save_name "difficulty_rebuttal2" --cutoff_gen 39
 """
 
 
@@ -72,7 +72,7 @@ list_archive2test = ["aces_elm_seed-5.json","aces_elm_seed-6.json","aces_elm_see
 
 for id_model,model_id in enumerate(list_all_model):
     for path_test_archive in list_archive2test:
-        n_gpu=4
+        n_gpu=8
         test_base_model="True"
         dev_script="SBATCH --qos=qos_gpu-dev"
         list_archive=[]

@@ -45,7 +45,7 @@ MAXWAIT=40
 sleep $((RANDOM % MAXWAIT))
 
 conda activate vllm532
-python inference_vllm.py --base_path $WORK/eval_model2/ --arg_gpu "v100" --test_base_model {test_base_model} --arg_bs_test 8000 --arg_model_id {model_id_2} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference} --path_archive_test "archives/{test_archive}" --file_save_name "difficulty_rebuttal"
+python inference_vllm.py --base_path $WORK/eval_model2/ --arg_gpu "v100" --test_base_model {test_base_model} --arg_bs_test 8000 --arg_model_id {model_id_2} --seed {seed} --path_archive "archives/{name_archive}" --n_gpu {n_gpu_inference} --path_archive_test "archives/{test_archive}" --file_save_name "difficulty_rebuttal2" --cutoff_gen 39
 """
 
 
