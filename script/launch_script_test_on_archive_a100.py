@@ -16,7 +16,7 @@ script_1="""#!/bin/bash
 #SBATCH --cpus-per-task=40
 {dev_script}
 #SBATCH --hint=nomultithread
-#SBATCH --time={h}:00:00
+#SBATCH --time=02:00:00
 #SBATCH --output=./out/big_out_finetune_deep-%A.out
 #SBATCH --error=./out/big_out_finetune_deep-%A.out
 
@@ -84,7 +84,7 @@ for id_model,model_id in enumerate(list_all_model):
         #     for seed in list_seed:
                 # archive = name+"_seed-"+str(seed)+".json"
                 # # name_archive=archive.split(".json")[0]
-        script_formated = script_1.format(n_gpu=n_gpu,dev_script=dev_script,h="2")+script_2.format(name_archive=path_test_archive,test_base_model=test_base_model,model_id=model_id,model_id_2=model_id,seed=seed,n_gpu_inference=n_gpu,test_archive=path_test_archive)
+        script_formated = script_1.format(n_gpu=n_gpu,dev_script=dev_script)+script_2.format(name_archive=path_test_archive,test_base_model=test_base_model,model_id=model_id,model_id_2=model_id,seed=seed,n_gpu_inference=n_gpu,test_archive=path_test_archive)
         extra_path='lr-mode'+model_id[:7]+"_"+path_test_archive.split(".")[0]
         slurmfile_path = f'slurm/run_a100'+extra_path+'.slurm'
         with open(slurmfile_path, 'w') as f:
