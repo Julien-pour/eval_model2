@@ -129,11 +129,12 @@ path_test=args.base_path+args.path_archive_test
 with open(path_test,mode = "r") as f:
     testset = json.load(f)
 
-# testset = [x for x in testset if (x["idx_generation"]<=39 and x["idx_generation"]>=0)]
+
 if args.cutoff_gen!=-1:
-    testset = [p["program_str"].split("def g")[0].strip() for p in testset if p["idx_generation"]<=args.cutoff_gen ]
-else:
-    testset_f=[p["program_str"].split("def g")[0].strip() for p in testset]
+    testset =[p for p in testset if p["idx_generation"] <= args.cutoff_gen ]
+# testset = [x for x in testset if (x["idx_generation"]<=39 and x["idx_generation"]>=0)]
+
+testset_f=[p["program_str"].split("def g")[0].strip() for p in testset]
 curr_idx=0
 correct_puzz=0
 
