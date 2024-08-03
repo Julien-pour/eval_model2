@@ -15,12 +15,13 @@ script_1="""#!/bin/bash
 #SBATCH --gres=gpu:{n_gpu}
 #SBATCH --cpus-per-task=40
 {dev_script}
-
 #SBATCH --hint=nomultithread
 #SBATCH --time={h}:00:00
-
 #SBATCH --output=./out/big_out_finetune_deep-%A.out
 #SBATCH --error=./out/big_out_finetune_deep-%A.out
+
+export TMPDIR=$JOBSCRATCH
+
 module purge
 module purge
 
