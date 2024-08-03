@@ -74,7 +74,7 @@ for id_model,model_id in enumerate(list_all_model):
     for path_test_archive in list_archive2test:
         n_gpu=8
         test_base_model="True"
-        dev_script=""#"#SBATCH --qos=qos_gpu-dev"
+        dev_script="#SBATCH --qos=qos_gpu-dev"
         list_archive=[]
         # list_name = ["rd_gen","aces_elm"]
         # list_archive = [i+".json" for i in list_name]
