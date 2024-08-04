@@ -171,7 +171,7 @@ for chat in dat_chat:
         if rm_system and (chat["chat"][i]["role"]=="system"):
             raise ValueError("system message in chat")
     if "mixtral" in model_id.lower():
-        chat_instruction = template_mixtral.format(instruction = chat["chat"]["content"])
+        chat_instruction = template_mixtral.format(instruction = chat["chat"][0]["content"])
     else:
         chat_instruction = tokenizer.apply_chat_template(chat["chat"], tokenize=False, add_generation_prompt=True)
     list_testset.append(chat_instruction)
