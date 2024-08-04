@@ -150,10 +150,7 @@ dat_chat = get_formated_chat_dataset(testset,text_field="program_str",retun_resp
 list_testset= []
 
 
-template_codegemma="""<bos><start_of_turn>user
-{instruction}<end_of_turn>
-<start_of_turn>model
-""" # idk why it is not working with chat template
+template_mixtral="""'<s>[INST] {instruction}[/INST]'""" # idk why it is not working with chat template
 
 for chat in dat_chat:
     idx_to_del=[]
@@ -173,8 +170,10 @@ for chat in dat_chat:
     for i in range(len(chat["chat"])):
         if rm_system and (chat["chat"][i]["role"]=="system"):
             raise ValueError("system message in chat")
-        
-    chat_instruction = tokenizer.apply_chat_template(chat["chat"], tokenize=False, add_generation_prompt=True)
+    if "mixtral" in model_id.lower():
+        chat_instruction = template_mixtral.format(instruction = chat["chat"]["content"])
+    else:
+        chat_instruction = tokenizer.apply_chat_template(chat["chat"], tokenize=False, add_generation_prompt=True)
     list_testset.append(chat_instruction)
 
 
