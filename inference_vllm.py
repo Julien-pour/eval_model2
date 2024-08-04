@@ -153,7 +153,7 @@ list_testset= []
 for chat in dat_chat:
     for i in range(len(chat["chat"])):
         idx_to_del=[]
-        if "Mistral-7B-Instruct-v0.1" in model_id or "Mistral-7B-Instruct-v0.2" in model_id:
+        if "Mistral-7B-Instruct-v0.1" in model_id or "Mistral-7B-Instruct-v0.2" in model_id or "Mixtral-8x7B-Instruct-v0.1" in model_id or "Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit" in model_id or "codegemma-7b-it" in model_id or "starcoder2" in model_id:
             if chat["chat"][i]["role"]=="system":
                 idx_to_del.append(i)
                 # del chat["chat"][i]
