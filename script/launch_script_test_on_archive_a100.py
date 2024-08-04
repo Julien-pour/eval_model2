@@ -65,8 +65,8 @@ list_model_4V100 = ["Mistral-Large-Instruct-2407-AWQ",
 "Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit"]
 
 list_model_A100 = ["Mistral-Large-Instruct-2407-AWQ","Meta-Llama-3.1-405B-Instruct-AWQ-INT4","Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit","Qwen2-72B-Instruct-AWQ","CodeQwen1.5-7B-Chat","starcoder2-15b-instruct-v0.1"]
-list_model_A100_debug = ["Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit","starcoder2-15b-instruct-v0.1","codegemma-7b-it"]
-
+list_model_A100_debug = ["Mixtral-8x22B-Instruct-v0.1-GPTQ","starcoder2-15b-instruct-v0.1","codegemma-7b-it"]
+# "Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit" doesn't work
 #starcoder2-15b-instruct-v0.1
 
 # codegemma-7b-it

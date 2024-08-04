@@ -150,10 +150,15 @@ dat_chat = get_formated_chat_dataset(testset,text_field="program_str",retun_resp
 list_testset= []
 
 
+template_codegemma="""<bos><start_of_turn>user
+{instruction}<end_of_turn>
+<start_of_turn>model
+""" # idk why it is not working with chat template
+
 for chat in dat_chat:
     for i in range(len(chat["chat"])):
         idx_to_del=[]
-        if "Mistral-7B-Instruct-v0.1" in model_id or "Mistral-7B-Instruct-v0.2" in model_id or "Mixtral-8x7B-Instruct-v0.1" in model_id or "Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit" in model_id or "codegemma-7b-it" in model_id or "starcoder2" in model_id:
+        if "Mistral-7B" in model_id or "mixtral" in model_id.lower() or "codegem" in model_id or "starcod" in model_id.lower():
             if chat["chat"][i]["role"]=="system":
                 idx_to_del.append(i)
                 # del chat["chat"][i]
@@ -162,6 +167,7 @@ for chat in dat_chat:
             # del chat["chat"][i]
     for idx_del in idx_to_del[::-1]:
         del chat["chat"][idx_del]
+    
     chat_instruction = tokenizer.apply_chat_template(chat["chat"], tokenize=False, add_generation_prompt=True)
     list_testset.append(chat_instruction)
 
