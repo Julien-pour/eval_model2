@@ -156,9 +156,11 @@ template_codegemma="""<bos><start_of_turn>user
 """ # idk why it is not working with chat template
 
 for chat in dat_chat:
+    idx_to_del=[]
     for i in range(len(chat["chat"])):
-        idx_to_del=[]
-        if "Mistral-7B" in model_id or "mixtral" in model_id.lower() or "codegem" in model_id or "starcod" in model_id.lower():
+        
+        rm_system=("Mistral-7B" in model_id) or ("mixtral" in model_id.lower()) or ("codegem" in model_id) or ("star" in model_id.lower())
+        if rm_system:
             if chat["chat"][i]["role"]=="system":
                 idx_to_del.append(i)
                 # del chat["chat"][i]
@@ -168,6 +170,10 @@ for chat in dat_chat:
     for idx_del in idx_to_del[::-1]:
         del chat["chat"][idx_del]
     
+    for i in range(len(chat["chat"])):
+        if rm_system and (chat["chat"][i]["role"]=="system"):
+            raise ValueError("system message in chat")
+        
     chat_instruction = tokenizer.apply_chat_template(chat["chat"], tokenize=False, add_generation_prompt=True)
     list_testset.append(chat_instruction)
 
